@@ -9085,4 +9085,5 @@ if __name__ == '__main__':
     print("📢 Notices Page: http://localhost:5000/notices")
     print("📞 Contact Page: http://localhost:5000/contact")
     print("✨ All 12 pages are fully functional and loaded with content!")
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
