@@ -29,7 +29,7 @@ FACILITIES = {
     'canteen': {
         'name': 'College Canteen',
         'description': 'Healthy and hygienic food services with variety of cuisines',
-        'manager': 'Mr. ',
+        'manager': 'Mr. Rupesh Yadav',
         'experience': '15 years',
         'timing': '8:00 AM - 6:00 PM',
         'image': 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&h=300&fit=crop',
@@ -748,6 +748,7 @@ HTML_TEMPLATE = '''
         }
 
         /* Header */
+                /* Header - Fixed to match home page */
         .top-bar {
             background: var(--primary-blue);
             color: var(--white);
@@ -788,6 +789,7 @@ HTML_TEMPLATE = '''
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+            position: relative;
         }
 
         .logo {
@@ -834,6 +836,77 @@ HTML_TEMPLATE = '''
         .nav-links a:hover {
             color: var(--primary-blue);
             background: var(--light-blue);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-dark);
+            padding: 0.5rem;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem;
+                border-bottom: 1px solid var(--light-blue);
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a:hover {
+                background: var(--light-blue);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .logo-text h1 {
+                font-size: 1.4rem;
+            }
+
+            .logo-text span {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 1.2rem;
+            }
+            
+            .logo-text span {
+                display: none;
+            }
+            
+            .nav-links {
+                gap: 0;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
         }
 
         /* Hero Section */
@@ -1251,6 +1324,7 @@ HTML_TEMPLATE = '''
         }
 
         /* Stats Section */
+                /* Stats Section - Gradient Version with Hover */
         .stats-section {
             background: var(--white);
             padding: 5rem 0;
@@ -1265,6 +1339,25 @@ HTML_TEMPLATE = '''
 
         .stat-card {
             padding: 2rem;
+            border-radius: 20px;
+            background: var(--white);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .stat-card:hover {
+            background: linear-gradient(135deg, #667eea 0%, #ec4899 100%);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card:hover .stat-number {
+            color: var(--white);
+        }
+
+        .stat-card:hover .stat-label {
+            color: rgba(255,255,255,0.9);
         }
 
         .stat-number {
@@ -1272,11 +1365,14 @@ HTML_TEMPLATE = '''
             font-weight: bold;
             color: var(--primary-blue);
             margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
         }
 
         .stat-label {
             color: var(--text-light);
             font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
 
         /* Modal */
@@ -1415,30 +1511,28 @@ HTML_TEMPLATE = '''
         </div>
     </div>
 
-    <!-- Header -->
+       <!-- Header - Fixed to match home page -->
     <header>
         <div class="container">
             <nav class="nav-main">
-                <a href="#home" class="logo">
+                <a href="/" class="logo">
                     <img src="https://www.siwscollege.edu.in/wp-content/themes/twentytwentyfour/custom-templates/images/SIWS%20logo%20new.png" alt="SIWS College Logo" class="logo-img">
                     <div class="logo-text">
                         <h1>''' + COLLEGE_DATA['name'] + '''</h1>
-                        <span>''' + COLLEGE_DATA['motto'] + '''</span>
+                        <span>Admissions Portal</span>
                     </div>
                 </a>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="/admissions">Admissions</a></li>
+                
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="/">Home</a></li>
                     <li><a href="/academics">Academics</a></li>
                     <li><a href="/calendar">Calendar</a></li>
-                    <li><a href="/departments">Departments</a></li>
-                    <li><a href="/alumni">Alumni</a></li>
-                    <li><a href="/career-services">Career Services</a></li>
-                    <li><a href="/scholarships">Scholarships</a></li>
-                    <li><a href="#facilities">Facilities</a></li>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#notices">Notices</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#eligibility">Eligibility</a></li>
+                    <li><a href="#apply">Apply Now</a></li>
+                    <li><a href="#process">Process</a></li>
                 </ul>
             </nav>
         </div>
@@ -2337,6 +2431,122 @@ ADMISSIONS_TEMPLATE = '''
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+                /* Mobile Styles */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem;
+                border-bottom: 1px solid var(--light-blue);
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a:hover {
+                background: var(--light-blue);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .logo-text h1 {
+                font-size: 1.4rem;
+            }
+
+            .logo-text span {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 1.2rem;
+            }
+            
+            .logo-text span {
+                display: none;
+            }
+            
+            .nav-links {
+                gap: 0;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+                /* Mobile Styles */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem;
+                border-bottom: 1px solid var(--light-blue);
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a:hover {
+                background: var(--light-blue);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .logo-text h1 {
+                font-size: 1.4rem;
+            }
+
+            .logo-text span {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 1.2rem;
+            }
+            
+            .logo-text span {
+                display: none;
+            }
+            
+            .nav-links {
+                gap: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2661,7 +2871,20 @@ ADMISSIONS_TEMPLATE = '''
     </footer>
 
     <script>
-        // Form Management Functions
+      function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!event.target.closest('.nav-main') && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
         function showForm(type) {
             hideForms();
             if (type === 'junior') {
@@ -3158,7 +3381,8 @@ FACILITIES_TEMPLATE = '''
                         <span>''' + COLLEGE_DATA['motto'] + '''</span>
                     </div>
                 </a>
-                <ul class="nav-links">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                 <ul class="nav-links" id="navLinks">
                     <li><a href="/">Home</a></li>
                     <li><a href="/admissions">Admissions</a></li>
                     <li><a href="/academics">Academics</a></li>
@@ -6134,6 +6358,47 @@ ACADEMICS_TEMPLATE = '''
                 grid-template-columns: 1fr;
             }
         }
+
+                /* Quick Links - Same as Home Page */
+        .quick-links {
+            background: var(--primary-blue);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .link-card {
+            background: rgba(255,255,255,0.1);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .link-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .link-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .link-card p {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -6208,7 +6473,7 @@ ACADEMICS_TEMPLATE = '''
                 <div class="stat-card">
                     <div class="stat-number">200+</div>
                     <div class="stat-label">Expert Faculty</div>
-                </div>
+                </div>W
                 <div class="stat-card">
                     <div class="stat-number">85%</div>
                     <div class="stat-label">Placement Rate</div>
@@ -6221,6 +6486,50 @@ ACADEMICS_TEMPLATE = '''
         </div>
     </section>
 
+        <!-- Quick Links -->
+    <section class="quick-links">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: white;">Quick Links</h2>
+            <p style="font-size: 1.2rem; opacity: 0.9; color: white; margin-bottom: 3rem;">Easy access to important sections</p>
+            <div class="links-grid">
+                <a href="/" class="link-card">
+                    <h3>Home</h3>
+                    <p>Back to main page</p>
+                </a>
+                <a href="/admissions" class="link-card">
+                    <h3>Admissions</h3>
+                    <p>Apply for 2024-25 academic year</p>
+                </a>
+                <a href="/calendar" class="link-card">
+                    <h3>Academic Calendar</h3>
+                    <p>Schedule and events</p>
+                </a>
+                <a href="/departments" class="link-card">
+                    <h3>Departments</h3>
+                    <p>Academic departments</p>
+                </a>
+                <a href="/alumni" class="link-card">
+                    <h3>Alumni</h3>
+                    <p>Network and connect</p>
+                </a>
+                <a href="/career-services" class="link-card">
+                    <h3>Career Services</h3>
+                    <p>Placements and training</p>
+                </a>
+                <a href="/scholarships" class="link-card">
+                    <h3>Scholarships</h3>
+                    <p>Financial assistance</p>
+                </a>
+                <a href="/events" class="link-card">
+                    <h3>Events</h3>
+                    <p>Campus activities</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Footer -->
+    <footer style="background: var(--text-dark); color: white; padding: 4rem 0 2rem; text-align: center;">
     <!-- Contact Footer -->
     <footer style="background: var(--text-dark); color: white; padding: 4rem 0 2rem; text-align: center;">
         <div class="container">
@@ -7273,17 +7582,17 @@ ALUMNI_TEMPLATE = '''
         }
 
         /* Stats Section */
+               /* Stats Section - Gradient Version */
         .stats-section {
-            background: var(--primary-blue);
-            color: white;
-            padding: 60px 0;
-            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 5rem 0;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
+            text-align: center;
         }
 
         .stat-card {
@@ -7291,14 +7600,17 @@ ALUMNI_TEMPLATE = '''
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: bold;
+            color: var(--white);
             margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .stat-label {
+            color: rgba(255,255,255,0.9);
             font-size: 1.1rem;
-            opacity: 0.9;
+            font-weight: 500;
         }
 
         /* Responsive */
